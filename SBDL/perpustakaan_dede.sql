@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2020 at 03:17 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Waktu pembuatan: 04 Apr 2020 pada 06.56
+-- Versi server: 10.4.6-MariaDB
+-- Versi PHP: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,153 +19,191 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `perpustakaan dede`
+-- Database: `perpustakaan`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `anggota`
+-- Struktur dari tabel `anggota`
 --
 
 CREATE TABLE `anggota` (
-  `id` int(11) NOT NULL,
-  `nama_anggota` varchar(50) NOT NULL,
-  `alamat` varchar(50) NOT NULL,
-  `no_pengenal` int(10) NOT NULL,
-  `kontak` int(20) NOT NULL,
-  `tgl_daftar` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_anggota` int(3) NOT NULL,
+  `nm_anggota` varchar(32) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
+  `ttl_anggota` text DEFAULT NULL,
+  `status_anggota` varchar(1) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `anggota`
+-- Dumping data untuk tabel `anggota`
 --
 
-INSERT INTO `anggota` (`id`, `nama_anggota`, `alamat`, `no_pengenal`, `kontak`, `tgl_daftar`) VALUES
-(1222, 'fellicya', 'majalengka', 9999, 2147483647, '2020-03-12'),
-(1234, 'dede riska', 'leuwimunding', 7777, 2147483647, '2020-03-19');
+INSERT INTO `anggota` (`id_anggota`, `nm_anggota`, `alamat`, `ttl_anggota`, `status_anggota`) VALUES
+(16, 'dede', 'lame', 'majalengka, 21 september 2000', '1'),
+(15, 'Dede Riska Amalia', 'Karangasem', 'Majalengka 22 September 1999', '1'),
+(17, 'Riska', 'Leuwimunding', 'Cirebon, 24 Oktober 2001', '1'),
+(18, 'Amalia', 'Leuwimunding', 'Majalengka, 25 Oktober 2000', '1'),
+(19, 'Surya', 'lame', 'Majalengka, 29 Juni 1995', '1');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `buku`
+-- Struktur dari tabel `buku`
 --
 
 CREATE TABLE `buku` (
-  `id_buku` int(10) NOT NULL,
-  `judul` varchar(50) NOT NULL,
-  `pengarang` varchar(20) NOT NULL,
-  `penerbit` varchar(20) NOT NULL,
-  `tahun_terbit` varchar(10) NOT NULL,
-  `jml_halaman` int(10) NOT NULL,
-  `status` enum('ada','dipinjam') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `kd_buku` int(5) NOT NULL,
+  `judul_buku` varchar(32) DEFAULT NULL,
+  `pengarang` varchar(32) DEFAULT NULL,
+  `jenis_buku` varchar(32) DEFAULT NULL,
+  `penerbit` varchar(32) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `buku`
+-- Dumping data untuk tabel `buku`
 --
 
-INSERT INTO `buku` (`id_buku`, `judul`, `pengarang`, `penerbit`, `tahun_terbit`, `jml_halaman`, `status`) VALUES
-(45555, 'saya pamit', 'ria ricis', 'diva center', '2019', 165, 'ada'),
-(75557, 'ketika tuhan jatuh cinta', 'wahyu sujani', 'bandung collection', '2013', 320, 'ada');
+INSERT INTO `buku` (`kd_buku`, `judul_buku`, `pengarang`, `jenis_buku`, `penerbit`) VALUES
+(1, 'Tutorial Makeup', 'Dede Riska Amalia', 'Novel', 'PT.Sinar Dunia'),
+(2, 'Desain Grafis', 'Amalia', 'Komik', 'PT.Segitiga'),
+(3, 'Hujan', 'Tere Liye', 'Novel', 'Tere Liye'),
+(4, 'Rindu', 'Tere Liye', 'Novel', 'Tere Liye'),
+(5, 'Dragon Ball v.5', 'Sasuke', 'Komik', 'PT. Jepang');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail transaksi`
+-- Struktur dari tabel `meminjam`
 --
 
-CREATE TABLE `detail transaksi` (
-  `no_peminjaman` int(20) NOT NULL,
-  `id_buku` int(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `meminjam` (
+  `id_pinjam` int(3) NOT NULL,
+  `tgl_pinjam` date DEFAULT NULL,
+  `jumlah_pinjam` int(2) DEFAULT NULL,
+  `tgl_kembali` date DEFAULT NULL,
+  `id_anggota` int(3) DEFAULT NULL,
+  `kd_buku` varchar(5) DEFAULT NULL,
+  `kembali` int(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `detail transaksi`
+-- Dumping data untuk tabel `meminjam`
 --
 
-INSERT INTO `detail transaksi` (`no_peminjaman`, `id_buku`) VALUES
-(1997, 75557),
-(1999, 45555);
+INSERT INTO `meminjam` (`id_pinjam`, `tgl_pinjam`, `jumlah_pinjam`, `tgl_kembali`, `id_anggota`, `kd_buku`, `kembali`) VALUES
+(36, '2020-04-04', 1, NULL, 19, '4', 1),
+(35, '2020-04-04', 1, NULL, 18, '5', 1),
+(34, '2020-04-04', 1, '2020-04-04', 17, '3', 2),
+(32, '2020-04-04', 1, '2020-04-04', 15, '1', 2),
+(33, '2020-04-04', 1, NULL, 16, '2', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `petugas`
+-- Struktur dari tabel `penerbit`
 --
 
-CREATE TABLE `petugas` (
-  `username` int(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
-  `nama_petugas` varchar(20) NOT NULL,
-  `alamat` varchar(50) NOT NULL,
-  `kontak` varchar(20) NOT NULL
+CREATE TABLE `penerbit` (
+  `id` int(11) NOT NULL,
+  `nama_penerbit` varchar(50) NOT NULL,
+  `alamat` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `petugas`
+-- Dumping data untuk tabel `penerbit`
 --
 
-INSERT INTO `petugas` (`username`, `password`, `nama_petugas`, `alamat`, `kontak`) VALUES
-(123477, 'dede222', 'amalia', 'karangasem', '2147483647');
+INSERT INTO `penerbit` (`id`, `nama_penerbit`, `alamat`) VALUES
+(1, 'Tere Liye', 'Tanjung Priok, Jakarta Utara'),
+(2, 'PT. Jepang', 'Tokyo, Jepang'),
+(3, 'PT. Sinar Dunia', 'Cibubur, Jakarta Pusat'),
+(4, 'PT. Segitiga', 'Jakarta Barat'),
+(5, 'PT. Uno', 'Bandung');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaksi`
+-- Struktur dari tabel `user`
 --
 
-CREATE TABLE `transaksi` (
-  `id` int(20) NOT NULL,
-  `no_peminjaman` int(20) NOT NULL,
-  `nama_petugas` varchar(20) NOT NULL,
-  `nama_anggota` varchar(20) NOT NULL,
-  `tgl_peminjaman` date NOT NULL,
-  `tgl_batas` date NOT NULL,
-  `tgl_kembali` date NOT NULL
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `transaksi`
+-- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `transaksi` (`id`, `no_peminjaman`, `nama_petugas`, `nama_anggota`, `tgl_peminjaman`, `tgl_batas`, `tgl_kembali`) VALUES
-(1222, 1997, 'amalia', 'fellicya', '2020-03-04', '2020-03-07', '2020-03-07'),
-(1234, 1999, 'amalia', 'dede riska', '2020-03-19', '2020-03-24', '2020-03-24');
+INSERT INTO `user` (`id`, `username`, `password`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `anggota`
+-- Indeks untuk tabel `anggota`
 --
 ALTER TABLE `anggota`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_anggota`);
 
 --
--- Indexes for table `buku`
+-- Indeks untuk tabel `buku`
 --
 ALTER TABLE `buku`
-  ADD PRIMARY KEY (`id_buku`);
+  ADD PRIMARY KEY (`kd_buku`);
 
 --
--- Indexes for table `detail transaksi`
+-- Indeks untuk tabel `meminjam`
 --
-ALTER TABLE `detail transaksi`
-  ADD PRIMARY KEY (`no_peminjaman`);
+ALTER TABLE `meminjam`
+  ADD PRIMARY KEY (`id_pinjam`),
+  ADD KEY `id_anggota` (`id_anggota`),
+  ADD KEY `kd_buku` (`kd_buku`);
 
 --
--- Indexes for table `petugas`
+-- Indeks untuk tabel `penerbit`
 --
-ALTER TABLE `petugas`
-  ADD PRIMARY KEY (`username`);
-
---
--- Indexes for table `transaksi`
---
-ALTER TABLE `transaksi`
+ALTER TABLE `penerbit`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `anggota`
+--
+ALTER TABLE `anggota`
+  MODIFY `id_anggota` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT untuk tabel `meminjam`
+--
+ALTER TABLE `meminjam`
+  MODIFY `id_pinjam` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT untuk tabel `penerbit`
+--
+ALTER TABLE `penerbit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
